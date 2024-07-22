@@ -11,15 +11,15 @@ form.addEventListener('submit', (e) => {
         showError('Por favor, seleccione una ciudad.');
         return;
     }
-    callAPI(nameCity.value, 'CO'); 
+    callAPI(nameCity.value, 'CO');
 });
 
-function callAPI(city, country){
+function callAPI(city, country) {
     const apiId = '249cdb6986ccc1f4fd38380c1181d6fc';
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiId}`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiId}`;
 
     fetch(url)
-        .then(data => data.json())
+        .then(response => response.json())
         .then(dataJSON => {
             if (dataJSON.cod === '404') {
                 showError('Ciudad no encontrada...');
@@ -36,8 +36,8 @@ function callAPI(city, country){
 
 
 
-function showWeather(data){
-    const {name, main:{temp, temp_min, temp_max}, weather:[arr]} = data;
+function showWeather(data) {
+    const { name, main: { temp, temp_min, temp_max }, weather: [arr] } = data;
 
     const degrees = kelvinToCentigrade(temp);
     const min = kelvinToCentigrade(temp_min);
@@ -55,7 +55,7 @@ function showWeather(data){
     result.appendChild(content);
 }
 
-function showError(message){
+function showError(message) {
     const alert = document.createElement('p');
     alert.classList.add('alert-message');
     alert.innerHTML = message;
@@ -66,10 +66,10 @@ function showError(message){
     }, 3000);
 }
 
-function kelvinToCentigrade(temp){
+function kelvinToCentigrade(temp) {
     return parseInt(temp - 273.15);
 }
 
-function clearHTML(){
+function clearHTML() {
     result.innerHTML = '';
 }
