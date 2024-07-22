@@ -2,7 +2,8 @@ const result = document.querySelector('.result');
 const form = document.querySelector('.get-weather');
 const nameCity = document.querySelector('#city');
 const nameCountry = document.querySelector('#country');
-let intervalId;
+
+
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -10,13 +11,7 @@ form.addEventListener('submit', (e) => {
         showError('Por favor, seleccione una ciudad.');
         return;
     }
-    if (intervalId) {
-        clearInterval(intervalId);
-    }
     callAPI(nameCity.value, 'CO'); 
-    intervalId = setInterval(() => {
-        callAPI(nameCity.value, 'CO');
-    }, 60000);
 });
 
 function callAPI(city, country){
@@ -38,6 +33,8 @@ function callAPI(city, country){
             showError('Error al obtener datos del clima.');
         });
 }
+
+
 
 function showWeather(data){
     const {name, main:{temp, temp_min, temp_max}, weather:[arr]} = data;
